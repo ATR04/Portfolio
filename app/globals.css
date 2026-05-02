@@ -1,0 +1,146 @@
+/* ═══════════════════════════════════════════════════════════
+   globals.css — Applied to EVERY page in the app
+
+   📚 HOW CSS WORKS IN NEXT.JS
+   • globals.css is imported once in layout.tsx and applies globally.
+   • For component-specific styles use Tailwind classes or CSS Modules
+     (e.g. Button.module.css) — those are scoped to the component only.
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;       /* Tailwind's CSS reset + sensible defaults      */
+@tailwind components; /* Reusable component classes you define below   */
+@tailwind utilities;  /* All the utility classes: p-4, text-xl, etc.  */
+
+/* ── Base Reset ───────────────────────────────────────────── */
+@layer base {
+  :root {
+    --bg-primary:   #030712;
+    --bg-secondary: #0d1117;
+    --bg-card:      #161b22;
+    --border:       #21262d;
+    --cyan:         #06b6d4;
+    --cyan-bright:  #22d3ee;
+    --text-primary: #e6edf3;
+    --text-muted:   #8b949e;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* offset for fixed navbar */
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--cyan);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--cyan-bright); }
+
+  ::selection {
+    background: rgba(6, 182, 212, 0.3);
+    color: #fff;
+  }
+}
+
+/* ── Reusable Component Classes ──────────────────────────── */
+@layer components {
+
+  /* Section wrapper — consistent spacing for every section */
+  .section-wrapper {
+    @apply max-w-6xl mx-auto px-6 py-20;
+  }
+
+  /* Section heading with cyan accent line */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-white mb-2;
+  }
+  .section-subtitle {
+    @apply text-cyan-400 font-mono text-sm uppercase tracking-widest mb-10;
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    @apply rounded-xl border border-[#21262d] bg-[#0d1117]/80 backdrop-blur-sm
+           transition-all duration-300 hover:border-cyan-500/50
+           hover:shadow-[0_0_20px_rgba(6,182,212,0.1)];
+  }
+
+  /* Cyan gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  /* Tag / badge chip */
+  .skill-tag {
+    @apply px-3 py-1 text-xs font-mono font-medium rounded-full
+           border border-cyan-500/30 bg-cyan-500/10 text-cyan-300
+           transition-all duration-200 hover:bg-cyan-500/20 hover:border-cyan-400
+           hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default;
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold
+           rounded-lg transition-all duration-200 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]
+           active:scale-95;
+  }
+
+  /* Ghost / outline button */
+  .btn-ghost {
+    @apply px-6 py-3 border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10
+           font-semibold rounded-lg transition-all duration-200 active:scale-95;
+  }
+}
+
+/* ── Utility Animations ───────────────────────────────────── */
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scanline overlay for techy effect */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.05) 2px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Subtle grid background */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(6,182,212,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6,182,212,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
